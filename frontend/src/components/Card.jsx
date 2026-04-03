@@ -1,9 +1,11 @@
 export default function Card({ title, subtitle, right, children }) {
   return (
-    <section className="rounded-3xl border border-[var(--border)] bg-white px-5 py-5 shadow-[var(--shadow-soft)]">
+    <section className="glass-card">
       <header className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <div className="text-base font-semibold text-[var(--text-strong)]">{title}</div>
+          <div className="font-heading text-lg tracking-wide text-[var(--neon-cyan)]" style={{ textShadow: '0 0 8px rgba(6,182,212,0.3)' }}>
+            {title}
+          </div>
           {subtitle ? <div className="mt-1 text-sm text-[var(--muted)]">{subtitle}</div> : null}
         </div>
         {right}

@@ -16,7 +16,7 @@ export default function CIExport({ onExport, yaml }) {
   }
 
   return (
-    <Card title="CI export" subtitle="Generate a workflow file from a single menu step.">
+    <Card title="🔨 Forge — CI Pipeline" subtitle="Forge a workflow artifact from your test arsenal.">
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-2">
           {['pytest', 'junit', 'jest'].map((f) => (
@@ -26,29 +26,29 @@ export default function CIExport({ onExport, yaml }) {
               onClick={() => setFramework(f)}
               className={`menu-choice menu-choice--compact ${framework === f ? 'menu-choice--active' : ''}`}
             >
-              {f.toUpperCase()}
+              {f === 'pytest' ? '🐍' : f === 'junit' ? '☕' : '🃏'} {f.toUpperCase()}
             </button>
           ))}
           <div className="flex-1" />
           <Button variant="soft" type="button" onClick={submit} disabled={loading}>
-            {loading ? 'Exporting…' : 'Export workflow'}
+            {loading ? '⏳ Forging…' : '🔨 Forge Workflow'}
           </Button>
         </div>
 
-        <div className="rounded-3xl border border-[var(--border)] bg-[var(--panel)] p-4">
-          <pre className="m-0 max-h-[320px] overflow-auto text-xs leading-6 text-[var(--text)]">
-            <code>{yaml || 'Workflow YAML will appear here.'}</code>
+        <div className="rounded-2xl border border-[var(--border)] p-4" style={{ background: 'rgba(10,10,10,0.5)' }}>
+          <pre className="m-0 max-h-[320px] overflow-auto text-xs leading-6 text-[var(--text-strong)]">
+            <code>{yaml || '⏳ Workflow YAML will be forged here…'}</code>
           </pre>
         </div>
 
         <div className="flex justify-end">
           <button
             type="button"
-            className="text-sm font-medium text-[var(--accent)] hover:text-[var(--accent-strong)]"
+            className="text-sm font-medium text-[var(--neon-cyan)] hover:text-[var(--accent-strong)] transition-colors"
             onClick={() => navigator.clipboard.writeText(yaml || '')}
             disabled={!yaml}
           >
-            Copy YAML
+            📋 Copy YAML
           </button>
         </div>
       </div>

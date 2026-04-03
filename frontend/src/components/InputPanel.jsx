@@ -4,9 +4,9 @@ import Card from './Card'
 import Button from './Button'
 
 const typeOptions = [
-  { id: 'code', label: 'Code' },
-  { id: 'api', label: 'API Endpoint' },
-  { id: 'story', label: 'User Story' },
+  { id: 'code', label: '⚔️ Code', desc: 'Battle source code bugs' },
+  { id: 'api', label: '🌐 API', desc: 'Scan API endpoints' },
+  { id: 'story', label: '📜 Story', desc: 'Quest from user stories' },
 ]
 
 const PLACEHOLDERS = {
@@ -28,13 +28,13 @@ const codeLanguages = [
 ]
 
 const testLevels = [
-  { id: 'unit', label: 'Unit' },
-  { id: 'integration', label: 'Integration' },
-  { id: 'acceptance', label: 'Acceptance' },
-  { id: 'system', label: 'System' },
+  { id: 'unit', label: '🗡️ Unit', desc: 'Single strikes' },
+  { id: 'integration', label: '⚔️ Integration', desc: 'Combo attacks' },
+  { id: 'acceptance', label: '🛡️ Acceptance', desc: 'Boss validation' },
+  { id: 'system', label: '🏰 System', desc: 'Siege warfare' },
 ]
 
-export default function InputPanel({ onGenerate, loading }) {
+export default function InputPanel({ onGenerate, loading, onFileUpload }) {
   const [type, setType] = useState('code')
   const [mode, setMode] = useState('black_box')
   const [testLevel, setTestLevel] = useState('unit')
@@ -56,6 +56,7 @@ export default function InputPanel({ onGenerate, loading }) {
     }
     reader.readAsText(file)
     e.target.value = ''
+    onFileUpload?.()
   }
 
   function handleClear() {
@@ -73,27 +74,30 @@ export default function InputPanel({ onGenerate, loading }) {
 
   return (
     <Card
-      title="Input"
-      subtitle="Choose the source, test mode, and test level, then generate."
+      title="⚔️ Battle Setup"
+      subtitle="Choose your weapon, target, and attack mode — then unleash."
       right={
-        <div className="inline-flex rounded-2xl border border-[var(--border)] bg-[var(--panel-muted)] p-1">
+        <div className="inline-flex rounded-xl border border-[var(--border)] bg-[var(--panel-muted)] p-1">
           <button
             className={`menu-chip ${mode === 'black_box' ? 'menu-chip--active' : ''}`}
             onClick={() => setMode('black_box')}
             type="button"
           >
-            Black Box
+            🌑 Black Box
           </button>
           <button
             className={`menu-chip ${mode === 'white_box' ? 'menu-chip--active' : ''}`}
             onClick={() => setMode('white_box')}
             type="button"
           >
-            White Box
+            ⚪ White Box
           </button>
         </div>
       }
     >
+      <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--neon-purple)]" style={{ textShadow: '0 0 6px rgba(168,85,247,0.3)' }}>
+        Target Type
+      </div>
       <div className="grid gap-3 md:grid-cols-3">
         {typeOptions.map((t) => (
           <button
@@ -102,13 +106,16 @@ export default function InputPanel({ onGenerate, loading }) {
             onClick={() => handleTypeChange(t.id)}
             className={`menu-choice ${type === t.id ? 'menu-choice--active' : ''}`}
           >
-            {t.label}
+            <div>{t.label}</div>
+            <div className="text-xs mt-0.5 opacity-60">{t.desc}</div>
           </button>
         ))}
       </div>
 
       <div className="mt-4">
-        <div className="mb-2 text-sm font-medium text-[var(--muted)]">Testing level</div>
+        <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-[var(--neon-purple)]" style={{ textShadow: '0 0 6px rgba(168,85,247,0.3)' }}>
+          Attack Level
+        </div>
         <div className="grid gap-3 md:grid-cols-4">
           {testLevels.map((item) => (
             <button
@@ -117,7 +124,8 @@ export default function InputPanel({ onGenerate, loading }) {
               onClick={() => setTestLevel(item.id)}
               className={`menu-choice ${testLevel === item.id ? 'menu-choice--active' : ''}`}
             >
-              {item.label}
+              <div>{item.label}</div>
+              <div className="text-xs mt-0.5 opacity-60">{item.desc}</div>
             </button>
           ))}
         </div>
@@ -125,12 +133,12 @@ export default function InputPanel({ onGenerate, loading }) {
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
         {type === 'code' ? (
-          <label className="inline-flex items-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--panel)] px-3 py-2 text-sm text-[var(--text)]">
-            <span className="font-medium text-[var(--muted)]">Language</span>
+          <label className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--panel)] px-3 py-2 text-sm text-[var(--text)]">
+            <span className="font-medium text-[var(--muted)]">🔧 Lang</span>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="rounded-xl border border-[var(--border)] bg-white px-2 py-1 text-sm text-[var(--text-strong)] outline-none"
+              className="rounded-lg border border-[var(--border)] bg-[var(--panel-solid)] px-2 py-1 text-sm text-[var(--text-strong)] outline-none"
             >
               {codeLanguages.map((item) => (
                 <option key={item.id} value={item.id}>
@@ -148,23 +156,23 @@ export default function InputPanel({ onGenerate, loading }) {
           className="hidden"
         />
         <Button variant="soft" type="button" onClick={() => fileInputRef.current?.click()}>
-          Upload file
+          📁 Upload file
         </Button>
         <Button variant="ghost" type="button" onClick={handleClear}>
-          Clear
+          🗑️ Clear
         </Button>
         <span className="ml-auto text-xs text-[var(--muted)]">
-          {code.length > 0 ? `${code.split('\n').length} lines` : 'Editor is empty'}
+          {code.length > 0 ? `${code.split('\n').length} lines loaded` : '⏳ Editor empty'}
         </span>
       </div>
 
-      <div className="mt-4 overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--panel)]">
+      <div className="mt-4 overflow-hidden rounded-2xl border border-[var(--border)]" style={{ background: 'rgba(10,10,10,0.5)' }}>
         <Editor
           height="360px"
           language={editorLang}
           value={code}
           onChange={(v) => setCode(v ?? '')}
-          theme="light"
+          theme="vs-dark"
           options={{
             minimap: { enabled: false },
             fontSize: 13,
@@ -177,15 +185,15 @@ export default function InputPanel({ onGenerate, loading }) {
 
       <div className="mt-4 flex flex-col gap-3 border-t border-[var(--border)] pt-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-sm text-[var(--muted)]">
-          Output frameworks: <span className="font-medium text-[var(--text)]">Pytest</span>,{' '}
-          <span className="font-medium text-[var(--text)]">JUnit</span>,{' '}
-          <span className="font-medium text-[var(--text)]">Jest</span>
+          Loot targets: <span className="font-medium text-[var(--neon-cyan)]">Pytest</span>,{' '}
+          <span className="font-medium text-[var(--neon-purple)]">JUnit</span>,{' '}
+          <span className="font-medium text-[var(--neon-pink)]">Jest</span>
         </div>
         <Button
           onClick={() => onGenerate(buildRequestInput(), type, mode, testLevel)}
           disabled={loading || code.trim().length === 0}
         >
-          {loading ? 'Generating…' : 'Generate tests'}
+          {loading ? '⏳ Generating…' : '⚡ Generate Tests'}
         </Button>
       </div>
     </Card>
