@@ -1,5 +1,3 @@
-# Agentica 2.0 - Team 24
-
 ## AI-Powered Automatic Test Case Generator
 
 TestGen AI is a full-stack platform that generates automated test cases from:
@@ -247,13 +245,6 @@ Use the sample scenarios in `demo_samples.md` for quick validation of:
 - LLM provider errors:
   - Check API key presence for selected provider.
   - For `local`, ensure `TCG_Model_Export` exists and dependencies are installed.
-
-## Team
-
-- Leader: Alok Kumar Das
-- Deependra Kumar Singh
-- Dharmendra Gora
-- Jyotinder Yadav
 
 
 
