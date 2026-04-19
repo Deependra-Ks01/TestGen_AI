@@ -17,16 +17,28 @@ export default function HealPage({ provider }) {
 
   return (
     <>
-      <div className="mb-6 border-b border-[var(--border)] pb-5">
-        <div className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">
-          Quest Log
-        </div>
-        <h2 className="mt-2 font-heading text-3xl tracking-wide text-[var(--text-strong)]">
-          🧪 Potion Lab
-        </h2>
-        <p className="mt-1 text-sm text-[var(--muted)]">
-          Brew a fix for your broken tests — paste the failing code and its error curseu2026 the alchemist awaits.
-        </p>
+      <div className="dashboard-hero">
+        <section className="hero-card fade-in">
+          <div className="hero-card__grid">
+            <div className="hero-card__copy">
+              <div className="gs-eyebrow">Self-heal</div>
+              <h2 className="hero-card__title">Repair broken tests from failure context, fast.</h2>
+              <p className="hero-card__text">
+                Feed the failing case and stack trace into a calmer workspace designed for diagnostics and recovery.
+              </p>
+            </div>
+            <div className="hero-card__meta">
+              <div className="hero-stat">
+                <div className="hero-stat__label">Provider</div>
+                <div className="hero-stat__value">{provider === 'api' ? 'Cloud API' : 'Local runtime'}</div>
+              </div>
+              <div className="hero-stat">
+                <div className="hero-stat__label">Status</div>
+                <div className="hero-stat__value">{healResult ? 'Recovered' : 'Awaiting input'}</div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
       <HealPanel onHeal={onHeal} result={healResult} />

@@ -5,82 +5,95 @@ export default function TrophiesPage() {
   const { gameState } = useGame()
   const totalUnlocked = gameState.achievements.length
   const total = Object.keys(ACHIEVEMENTS).length
+  const pct = total ? Math.round((totalUnlocked / total) * 100) : 0
 
   return (
     <>
-      <div className="mb-6 border-b border-[var(--border)] pb-5">
-        <div className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">
-          Quest Log
-        </div>
-        <h2 className="mt-2 font-heading text-3xl tracking-wide text-[var(--text-strong)]">
-          🏆 Trophy Room
-        </h2>
-        <p className="mt-1 text-sm text-[var(--muted)]">
-          Your collection of earned badges — {totalUnlocked} / {total} unlocked.
-        </p>
+      <div className="dashboard-hero">
+        <section className="hero-card fade-in">
+          <div className="hero-card__grid">
+            <div className="hero-card__copy">
+              <div className="gs-eyebrow">Progress</div>
+              <h2 className="hero-card__title">Track momentum across the full testing workflow.</h2>
+              <p className="hero-card__text">
+                Achievements now sit inside the same bright system, with clearer progress cues and a less gamey, more premium presentation.
+              </p>
+            </div>
+            <div className="hero-card__meta">
+              <div className="hero-stat">
+                <div className="hero-stat__label">Unlocked</div>
+                <div className="hero-stat__value">{totalUnlocked}</div>
+              </div>
+              <div className="hero-stat">
+                <div className="hero-stat__label">Completion</div>
+                <div className="hero-stat__value">{pct}%</div>
+              </div>
+              <div className="hero-stat">
+                <div className="hero-stat__label">Remaining</div>
+                <div className="hero-stat__value">{Math.max(0, total - totalUnlocked)}</div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
-      {/* Progress summary */}
       <div className="glass-card mb-6">
-        <div className="flex items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl text-3xl"
-               style={{ background: 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.2)' }}>
-            🏆
+        <div className="flex flex-wrap items-center gap-4">
+          <div
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-sm font-semibold text-[var(--muted)]"
+            aria-hidden
+          >
+            {pct === 100 ? 'Done' : `${pct}%`}
           </div>
-          <div>
-            <div className="text-2xl font-bold text-[var(--text-strong)]">
-              {totalUnlocked} <span className="text-base font-normal text-[var(--muted)]">/ {total} achievements</span>
+          <div className="min-w-0 flex-1">
+            <div className="text-lg font-medium text-[var(--text-strong)]">
+              {totalUnlocked}
+              <span className="text-base font-normal text-[var(--muted)]"> / {total}</span>
             </div>
             <div className="text-sm text-[var(--muted)]">
-              {totalUnlocked === total
-                ? '🎉 All achievements unlocked! You are a legendary tester!'
-                : `${total - totalUnlocked} more to unlock — keep questing!`}
+              {totalUnlocked === total ? 'All milestones completed.' : `${total - totalUnlocked} remaining.`}
             </div>
           </div>
-          {/* completion bar */}
-          <div className="ml-auto hidden sm:block" style={{ width: 120 }}>
-            <div className="h-2 w-full rounded-full" style={{ background: 'rgba(6,182,212,0.1)' }}>
-              <div
-                className="h-full rounded-full"
-                style={{
-                  width: `${(totalUnlocked / total) * 100}%`,
-                  background: 'linear-gradient(90deg, var(--neon-cyan), var(--neon-purple))',
-                  transition: 'width 0.6s ease',
-                }}
-              />
-            </div>
+          <div className="hidden h-2 w-28 overflow-hidden rounded-full bg-[var(--border)] sm:block">
+            <div
+              className="h-full rounded-full bg-[var(--accent-solid)] transition-[width] duration-300"
+              style={{ width: `${pct}%` }}
+            />
           </div>
         </div>
       </div>
 
-      {/* Badges grid */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {Object.values(ACHIEVEMENTS).map((ach) => {
           const unlocked = gameState.achievements.includes(ach.id)
           return (
             <div
               key={ach.id}
-              className={`glass-card flex flex-col items-center text-center transition-all duration-300 ${
-                unlocked ? '' : 'opacity-30 grayscale'
-              }`}
-              style={
-                unlocked
-                  ? { borderColor: 'rgba(6,182,212,0.3)', boxShadow: '0 0 20px rgba(6,182,212,0.08)' }
-                  : {}
-              }
+              className={`glass-card flex flex-col ${unlocked ? '' : 'opacity-40'}`}
             >
-              <div className="text-4xl mb-3">{ach.icon}</div>
-              <div className="text-sm font-bold text-[var(--text-strong)]">{ach.name}</div>
-              <div className="mt-1 text-xs text-[var(--muted)] leading-relaxed">{ach.desc}</div>
-              <div
-                className="mt-3 rounded-lg px-3 py-1 text-xs font-bold"
-                style={
-                  unlocked
-                    ? { background: 'rgba(16,185,129,0.1)', color: 'var(--neon-green)', border: '1px solid rgba(16,185,129,0.2)' }
-                    : { background: 'rgba(100,116,139,0.1)', color: 'var(--muted)', border: '1px solid rgba(100,116,139,0.15)' }
-                }
-              >
-                {unlocked ? `✅ +${ach.xp} XP earned` : `🔒 +${ach.xp} XP`}
+              <div className="flex items-start gap-3">
+                <div
+                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-md border text-[0.7rem] font-semibold ${
+                    unlocked
+                      ? 'border-[var(--border-strong)] bg-[var(--surface)] text-[var(--text-strong)]'
+                      : 'border-[var(--border)] bg-[var(--bg-elevated)] text-[var(--muted)]'
+                  }`}
+                >
+                  {ach.abbr}
+                </div>
+                <div className="min-w-0 flex-1 text-left">
+                  <div className="text-sm font-medium text-[var(--text-strong)]">{ach.name}</div>
+                  <div className="mt-1 text-xs leading-relaxed text-[var(--muted)]">{ach.desc}</div>
+                  <div
+                    className={`mt-3 inline-flex rounded-md border px-2 py-1 text-[0.65rem] font-medium ${
+                      unlocked
+                        ? 'border-[var(--border-strong)] text-[var(--success)]'
+                        : 'border-[var(--border)] text-[var(--muted)]'
+                    }`}
+                  >
+                    {unlocked ? `+${ach.xp} XP` : 'Locked'}
+                  </div>
+                </div>
               </div>
             </div>
           )

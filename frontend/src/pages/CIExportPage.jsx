@@ -17,16 +17,28 @@ export default function CIExportPage({ tests }) {
 
   return (
     <>
-      <div className="mb-6 border-b border-[var(--border)] pb-5">
-        <div className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">
-          Quest Log
-        </div>
-        <h2 className="mt-2 font-heading text-3xl tracking-wide text-[var(--text-strong)]">
-          🔨 The Forge
-        </h2>
-        <p className="mt-1 text-sm text-[var(--muted)]">
-          Forge CI/CD workflow artifacts from your generated test arsenal.
-        </p>
+      <div className="dashboard-hero">
+        <section className="hero-card fade-in">
+          <div className="hero-card__grid">
+            <div className="hero-card__copy">
+              <div className="gs-eyebrow">CI export</div>
+              <h2 className="hero-card__title">Turn generated tests into ready-to-run pipeline YAML.</h2>
+              <p className="hero-card__text">
+                Export a cleaner GitHub Actions workflow from the same command deck without losing context between generation and delivery.
+              </p>
+            </div>
+            <div className="hero-card__meta">
+              <div className="hero-stat">
+                <div className="hero-stat__label">Formats</div>
+                <div className="hero-stat__value">Pytest · JUnit · Jest</div>
+              </div>
+              <div className="hero-stat">
+                <div className="hero-stat__label">Pipeline</div>
+                <div className="hero-stat__value">{workflowYaml ? 'Prepared' : 'Idle'}</div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
       <CIExport onExport={onExport} yaml={workflowYaml} />

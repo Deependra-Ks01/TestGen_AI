@@ -1,28 +1,49 @@
-import { useGame } from '../lib/GameContext'
+import { Link } from 'react-router-dom'
 import QualityScore from '../components/QualityScore'
 
 export default function QualityPage({ scores }) {
   return (
     <>
-      <div className="mb-6 border-b border-[var(--border)] pb-5">
-        <div className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">
-          Quest Log
-        </div>
-        <h2 className="mt-2 font-heading text-3xl tracking-wide text-[var(--text-strong)]">
-          📊 Character Stats
-        </h2>
-        <p className="mt-1 text-sm text-[var(--muted)]">
-          Review your test suite power levels across four combat attributes.
-        </p>
+      <div className="dashboard-hero">
+        <section className="hero-card fade-in">
+          <div className="hero-card__grid">
+            <div className="hero-card__copy">
+              <div className="gs-eyebrow">Quality</div>
+              <h2 className="hero-card__title">See quality signals as a live review surface.</h2>
+              <p className="hero-card__text">
+                Coverage, edge cases, security, and readability are presented in a cleaner score deck with guidance for the next iteration.
+              </p>
+            </div>
+            <div className="hero-card__meta">
+              <div className="hero-stat">
+                <div className="hero-stat__label">Overall</div>
+                <div className="hero-stat__value">{scores?.overall ?? '—'}</div>
+              </div>
+              <div className="hero-stat">
+                <div className="hero-stat__label">Coverage</div>
+                <div className="hero-stat__value">{scores?.coverage ?? '—'}</div>
+              </div>
+              <div className="hero-stat">
+                <div className="hero-stat__label">Security</div>
+                <div className="hero-stat__value">{scores?.security ?? '—'}</div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
       <QualityScore scores={scores} />
 
       <div className="mt-6 glass-card">
         <div className="text-sm text-[var(--muted)]">
-          💡 <span className="text-[var(--text-strong)] font-semibold">Tip:</span> Generate tests from the{' '}
-          <a href="/generate" className="text-[var(--neon-cyan)] hover:underline">⚔️ Generate</a> page first.
-          Your quality scores will automatically appear here after generation.
+          Generate tests on the{' '}
+          <Link
+            to="/generate"
+            className="font-semibold text-[var(--gold-bright)] underline-offset-[6px] decoration-[rgba(196,165,90,0.45)] hover:text-[var(--accent-muted)]"
+          >
+            Generate
+          </Link>{' '}
+          page first; scores appear here automatically.
         </div>
       </div>
     </>

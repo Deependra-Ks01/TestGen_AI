@@ -11,18 +11,14 @@ export default function XPBar({ xp }) {
         <span className="xp-amount">{xp} XP</span>
       </div>
       <div className="xp-bar-track">
-        <div
-          className="xp-bar-fill"
-          style={{ width: `${progress}%` }}
-        />
-        <div className="xp-bar-glow" style={{ width: `${progress}%` }} />
+        <div className="xp-bar-fill" style={{ width: `${progress}%` }} />
       </div>
-      {next && (
+      {next ? (
         <div className="xp-bar-footer">
           <span>Next: {next.title}</span>
-          <span>{next.xp - xp} XP to go</span>
+          <span>{Math.max(0, next.xp - xp)} XP left</span>
         </div>
-      )}
+      ) : null}
     </div>
   )
 }

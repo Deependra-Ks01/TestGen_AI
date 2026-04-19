@@ -1,11 +1,11 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState } from 'react'
 import Card from './Card'
 import Button from './Button'
 
 const tabs = [
-  { id: 'pytest', label: '🐍 Pytest', color: 'var(--neon-cyan)' },
-  { id: 'junit', label: '☕ JUnit', color: 'var(--neon-purple)' },
-  { id: 'jest', label: '🃏 Jest', color: 'var(--neon-pink)' },
+  { id: 'pytest', label: 'Pytest' },
+  { id: 'junit', label: 'JUnit' },
+  { id: 'jest', label: 'Jest' },
 ]
 
 function downloadText(filename, text) {
@@ -23,30 +23,15 @@ function downloadText(filename, text) {
 export default function OutputPanel({ tests }) {
   const [tab, setTab] = useState('pytest')
   const code = useMemo(() => (tests && tests[tab]) || '', [tests, tab])
-  const [showLoot, setShowLoot] = useState(false)
-
-  // Trigger loot animation when code changes
-  useEffect(() => {
-    if (code) {
-      setShowLoot(true)
-      const timer = setTimeout(() => setShowLoot(false), 800)
-      return () => clearTimeout(timer)
-    }
-  }, [code])
 
   return (
     <Card
-      title="🎁 Loot Drop"
-      subtitle="Your generated test artifacts — claim your reward."
+      title="Output"
+      subtitle="Switch frameworks instantly, review the result, then copy or download the generated suite."
       right={
         <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            type="button"
-            onClick={() => navigator.clipboard.writeText(code)}
-            disabled={!code}
-          >
-            📋 Copy
+          <Button variant="ghost" type="button" onClick={() => navigator.clipboard.writeText(code)} disabled={!code}>
+            Copy
           </Button>
           <Button
             variant="soft"
@@ -59,7 +44,7 @@ export default function OutputPanel({ tests }) {
             }
             disabled={!code}
           >
-            💾 Download
+            Download
           </Button>
         </div>
       }
@@ -77,10 +62,9 @@ export default function OutputPanel({ tests }) {
         ))}
       </div>
 
-      <div className={`rounded-2xl border border-[var(--border)] overflow-hidden ${showLoot ? 'loot-enter' : ''}`}
-           style={{ background: 'rgba(10,10,10,0.5)' }}>
-        <pre className="m-0 max-h-[520px] overflow-auto p-4 text-xs leading-6 text-[var(--text-strong)]">
-          <code>{code || '⏳ Generate tests to see your loot here…'}</code>
+      <div className="code-window">
+        <pre className="text-xs leading-6">
+          <code>{code || 'Run generate to see output here.'}</code>
         </pre>
       </div>
     </Card>
