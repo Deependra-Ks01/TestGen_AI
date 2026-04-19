@@ -11,7 +11,7 @@ export default function QualityPage({ scores }) {
               <div className="gs-eyebrow">Quality</div>
               <h2 className="hero-card__title">See quality signals as a live review surface.</h2>
               <p className="hero-card__text">
-                Coverage, edge cases, security, and readability are presented in a cleaner score deck with guidance for the next iteration.
+                Coverage, edge cases, security, and readability are presented in a cleaner score sheet with guidance for the next iteration.
               </p>
             </div>
             <div className="hero-card__meta">

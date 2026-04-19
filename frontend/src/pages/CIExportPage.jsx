@@ -24,7 +24,7 @@ export default function CIExportPage({ tests }) {
               <div className="gs-eyebrow">CI export</div>
               <h2 className="hero-card__title">Turn generated tests into ready-to-run pipeline YAML.</h2>
               <p className="hero-card__text">
-                Export a cleaner GitHub Actions workflow from the same command deck without losing context between generation and delivery.
+                Export a cleaner GitHub Actions workflow from the same dashboard without losing context between generation and delivery.
               </p>
             </div>
             <div className="hero-card__meta">

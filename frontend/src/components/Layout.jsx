@@ -32,12 +32,12 @@ export default function Layout({ user, onLogout, provider, setProvider, lastSess
           <aside className="app-sidebar fade-in">
             <div className="sidebar-inner">
               <div className="sidebar-brand">
-                <div className="sidebar-brand__badge">Aviation-grade test workflows</div>
+                <div className="sidebar-brand__badge">Automated test workflows</div>
                 <div className="sidebar-brand__copy">
                   <div className="gs-eyebrow">TestGen AI</div>
                   <h1 className="sidebar-brand__headline">Modern test orchestration, re-positioned around flow.</h1>
                   <p className="sidebar-brand__text">
-                    A lighter Gulfstream-inspired workspace with fast generation, scoring, healing, and export in one motion-rich control deck.
+                    A modern and fast workspace with generation, scoring, healing, and export in one motion-rich dashboard.
                   </p>
                 </div>
               </div>

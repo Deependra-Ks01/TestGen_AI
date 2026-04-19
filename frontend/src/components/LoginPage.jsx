@@ -37,10 +37,10 @@ export default function LoginPage({ onAuth }) {
     <div className="auth-shell">
       <div className="auth-layout">
         <div className="auth-copy">
-          <div className="sidebar-brand__badge">Light Gulfstream-inspired system</div>
+          <div className="sidebar-brand__badge">Modern testing system</div>
           <div className="gs-eyebrow text-[var(--muted)]">TestGen AI</div>
           <h1 className="font-heading text-4xl tracking-[-0.05em] text-[var(--text-strong)] md:text-[4rem]">
-            Sign in to your test command deck.
+            Sign in to your test dashboard.
           </h1>
           <p className="max-w-xl text-base leading-relaxed text-[var(--muted)]">
             Generate, score, heal, and ship test assets from a cleaner workspace that feels modern, bright, and focused.
